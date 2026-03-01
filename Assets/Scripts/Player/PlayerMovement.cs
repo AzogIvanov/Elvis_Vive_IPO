@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
 
     private PlayerAttack playerAttack;
 
+    public Animator animator;
+
     public bool IsMoving => moveInput != Vector3.zero;
 
     void Start()
@@ -32,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
         playerAttack = GetComponent<PlayerAttack>();
 
         rb.angularDamping = 10f;
+
     }
 
     void Update()
@@ -45,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded && !isDashing)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            animator.SetBool("IsJumping", true);
+            Debug.Log("JUMP TRUE");
         }
 
         // DASH
@@ -86,6 +91,35 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = new Vector3(moveInput.x * moveSpeed, rb.velocity.y, moveInput.z * moveSpeed);
 
+        // ----- ANIMATION DIRECTION -----
+        Vector3 moveDir = moveInput;
+        Vector3 aimDir;
+
+        if (playerAttack.isAiming && playerAttack.targetRotationAim != Quaternion.identity)
+        {
+            aimDir = playerAttack.targetRotationAim * Vector3.forward;
+        }
+        else
+        {
+            aimDir = transform.forward;
+        }
+
+        if (moveDir.sqrMagnitude > 0.01f)
+        {
+            moveDir.Normalize();
+            aimDir.Normalize();
+
+            float dot = Vector3.Dot(moveDir, aimDir);
+            animator.SetFloat("DirectionDot", dot);
+        }
+        else
+        {
+            animator.SetFloat("DirectionDot", 1f);
+        }
+
+
+        animator.SetFloat("Speed", moveInput.magnitude);
+
         if (rb.linearVelocity.y < 0)
         {
             rb.linearVelocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
@@ -118,6 +152,8 @@ public class PlayerMovement : MonoBehaviour
             if (Vector3.Dot(contact.normal, Vector3.up) > 0.5f)
             {
                 isGrounded = true;
+                animator.SetBool("IsJumping", false);
+                Debug.Log("JUMP FALSE");
                 return;
             }
         }
