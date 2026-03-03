@@ -31,7 +31,7 @@ public class PlayerAreaAttack : MonoBehaviour
         canAttack = false;
 
         // INSTANCIAR VISUAL
-        Vector3 offset = new Vector3(0f, -0.5f, 0f);
+        Vector3 offset = new Vector3(0f, 0.1f, 0f);
         GameObject wave = Instantiate(wavePrefab, transform.position + offset, Quaternion.identity);
         StartCoroutine(ExpandWave(wave));
 
