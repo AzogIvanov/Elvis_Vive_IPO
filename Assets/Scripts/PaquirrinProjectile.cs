@@ -4,6 +4,7 @@ public class PaquirrinProjectile : MonoBehaviour
 {
     public float speed = 8f;
     public float lifeTime = 5f;
+    public int damage = 1;
 
     void Start()
     {
@@ -17,13 +18,20 @@ public class PaquirrinProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit: " + other.name);
-
         if (other.CompareTag("Player"))
         {
-            Debug.Log("PLAYER HIT");
+            GlobalHealth health = other.GetComponentInParent<GlobalHealth>();
+            if (health != null)
+            {
+                health.TakeDamage(damage);
+            }
 
-            // daño aquí luego
+
+            Destroy(gameObject);
+        }
+
+        if (!other.isTrigger)
+        {
             Destroy(gameObject);
         }
     }
