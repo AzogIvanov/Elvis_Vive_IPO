@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 2cf4d238982f7df42a3a282035db9d10, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 105b9a22e60c12442b3cb3f2f31cac09, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: e594d138291277642a5277da257a6002, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -919,6 +919,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.1
 --- !u!1001 &407849521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3254,7 +3256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3632,15 +3634,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3300041331017280445, guid: 0c2cdd15a0644db43b409374d8ea0f28, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -43.63
+      value: -1.96
       objectReference: {fileID: 0}
     - target: {fileID: 3300041331017280445, guid: 0c2cdd15a0644db43b409374d8ea0f28, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.75
+      value: 12.32
       objectReference: {fileID: 0}
     - target: {fileID: 3300041331017280445, guid: 0c2cdd15a0644db43b409374d8ea0f28, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.17
+      value: -6.6
       objectReference: {fileID: 0}
     - target: {fileID: 3300041331017280445, guid: 0c2cdd15a0644db43b409374d8ea0f28, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3739,7 +3741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1988603597827072837, guid: 231765ccc49331b4a9358f81bd03c95c, type: 3}
       propertyPath: maxHealth
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4491115619343068967, guid: 231765ccc49331b4a9358f81bd03c95c, type: 3}
       propertyPath: m_IncludeLayers.m_Bits
