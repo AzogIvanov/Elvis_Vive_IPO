@@ -12,8 +12,17 @@ public class GlobalHealth : MonoBehaviour
 
     private int currentHealth;
 
+    public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
+    public System.Action onHealthChanged;
+
     private Renderer[] renderers;
     private Dictionary<Material, Color> originalColors = new();
+
+    void Awake()
+    {
+        currentHealth = maxHealth;
+    }
 
     void Start()
     {
@@ -36,6 +45,8 @@ public class GlobalHealth : MonoBehaviour
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
+
+        onHealthChanged?.Invoke();
 
         StopCoroutine(nameof(FlashRed));
         StartCoroutine(nameof(FlashRed));

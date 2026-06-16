@@ -15,6 +15,11 @@ public class PlayerMovement : MonoBehaviour
     public float dashDuration = 0.15f;
     public float dashCooldown = 1f;
 
+    public float DashCooldownRemaining => dashCooldownTimer;
+
+    [Header("Abilities")]
+    public bool hasDash = false;
+
     private CharacterController controller;
     private PlayerAttack playerAttack;
     public Animator animator;
@@ -77,7 +82,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // DASH
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0f)
+        if (hasDash &&
+            Input.GetKeyDown(KeyCode.LeftShift) &&
+            dashCooldownTimer <= 0f)
         {
             isDashing = true;
             dashTimer = dashDuration;

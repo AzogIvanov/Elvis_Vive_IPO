@@ -10,17 +10,28 @@ public class PlayerAreaAttack : MonoBehaviour
     public float stunDuration = 1f;
     public LayerMask enemyLayer;
     public float attackDuration = 2f;
-    public float damageInterval = 0.5f; 
+    public float damageInterval = 0.5f;
 
     [Header("Visual")]
     public GameObject wavePrefab;
     public float waveExpandSpeed = 6f;
 
+    [Header("Abilities")]
+    public bool hasArea = false;
+
     private bool canAttack = true;
+    private float cooldownTimer;
+
+    public float AreaCooldownRemaining => cooldownTimer;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && canAttack)
+        if (cooldownTimer > 0)
+            cooldownTimer -= Time.deltaTime;
+
+        if (hasArea &&
+            Input.GetKeyDown(KeyCode.Q) &&
+            canAttack)
         {
             StartCoroutine(DoAreaAttack());
         }
@@ -29,28 +40,27 @@ public class PlayerAreaAttack : MonoBehaviour
     IEnumerator DoAreaAttack()
     {
         canAttack = false;
+        cooldownTimer = cooldown;
 
-        // INSTANCIAR VISUAL
         Vector3 offset = new Vector3(0f, 0.1f, 0f);
         GameObject wave = Instantiate(wavePrefab, transform.position + offset, Quaternion.identity);
-        StartCoroutine(ExpandWave(wave));
 
+        StartCoroutine(ExpandWave(wave));
 
         float timer = 0f;
         float damageTimer = 0f;
 
-
         while (timer < attackDuration)
         {
-            // WAVE FOLLOWS THE PLAYER
             if (wave != null)
                 wave.transform.position = transform.position + offset;
 
-            // DO DMG EVERTY INTERVAL
             damageTimer += Time.deltaTime;
+
             if (damageTimer >= damageInterval)
             {
                 Collider[] enemies = Physics.OverlapSphere(transform.position, radius, enemyLayer);
+
                 foreach (Collider enemy in enemies)
                 {
                     EnemyHealth e = enemy.GetComponent<EnemyHealth>();
@@ -60,6 +70,7 @@ public class PlayerAreaAttack : MonoBehaviour
                         e.Stun(stunDuration);
                     }
                 }
+
                 damageTimer = 0f;
             }
 
@@ -68,8 +79,6 @@ public class PlayerAreaAttack : MonoBehaviour
         }
 
         Destroy(wave);
-
-        yield return new WaitForSeconds(cooldown);
         canAttack = true;
     }
 
@@ -78,7 +87,6 @@ public class PlayerAreaAttack : MonoBehaviour
         float targetScale = radius * 2f;
         float size = 0.2f;
 
-
         while (size < targetScale)
         {
             size += Time.deltaTime * waveExpandSpeed;
@@ -86,14 +94,6 @@ public class PlayerAreaAttack : MonoBehaviour
             yield return null;
         }
 
-
-        // MAINTAIN THE WAVE VISUAL UNTIL THE ATTACK ENDS
         wave.transform.localScale = new Vector3(targetScale, 0.1f, targetScale);
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }
