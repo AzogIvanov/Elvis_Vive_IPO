@@ -1,11 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NPCInteractionZone : MonoBehaviour
 {
     public GameObject interactionUI;
-
     [TextArea(3, 10)]
     public string dialogueText;
+
+    public UnityEvent onDialogueClosed; // <- aquí enchufas dar objeto / abrir tienda / iniciar quest
 
     private bool playerInZone;
 
@@ -18,7 +20,7 @@ public class NPCInteractionZone : MonoBehaviour
     {
         if (playerInZone && Input.GetKeyDown(KeyCode.F))
         {
-            DialogueManager.Instance.OpenDialogue(dialogueText);
+            DialogueManager.Instance.OpenDialogue(dialogueText, () => onDialogueClosed?.Invoke());
         }
     }
 

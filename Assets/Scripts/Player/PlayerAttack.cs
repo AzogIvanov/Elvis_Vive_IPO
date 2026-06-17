@@ -26,6 +26,9 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        if (DialogueManager.Instance != null && DialogueManager.Instance.IsOpen)
+            return;
+
         isAiming = Input.GetMouseButton(0) || Input.GetKey(KeyCode.LeftControl);
 
         // ONLY ROTETE THE MOUSE WHEN:
