@@ -9,48 +9,67 @@ public class ChurchDoor : MonoBehaviour
     [Header("UI")]
     public GameObject interactText;
 
-    [Header("Optional Object")]
-    public GameObject objectToDeactivate;
+    [Header("Optional Objects")]
+    public GameObject[] objectsToDeactivate;
+    public GameObject[] objectsToActivate;
 
     private bool playerNear = false;
     private Transform playerTransform;
+    private bool alreadyTriggered = false;
 
     private void Start()
     {
         if (interactText != null)
             interactText.SetActive(false);
 
-        // restaurar estado si ya fue activado antes
-        if (GameManager.Instance != null &&
-            GameManager.Instance.GetFlag("ChurchDoorOpened"))
+        ApplyState();
+    }
+
+    void ApplyState()
+    {
+        if (GameManager.Instance == null) return;
+
+        if (GameManager.Instance.GetFlag("ChurchDoorOpened"))
         {
-            if (objectToDeactivate != null)
-                objectToDeactivate.SetActive(false);
+            SetObjects(objectsToActivate, true);
+            SetObjects(objectsToDeactivate, false);
+        }
+    }
+
+    void SetObjects(GameObject[] list, bool state)
+    {
+        if (list == null) return;
+
+        foreach (var obj in list)
+        {
+            if (obj != null)
+                obj.SetActive(state);
         }
     }
 
     private void Update()
     {
-        if (playerNear && Input.GetKeyDown(KeyCode.F))
+        if (alreadyTriggered || !playerNear || !Input.GetKeyDown(KeyCode.F))
+            return;
+
+        alreadyTriggered = true;
+
+        if (GameManager.Instance != null)
         {
-            if (GameManager.Instance != null)
+            GameManager.Instance.SetFlag("ChurchDoorOpened", true);
+
+            if (playerTransform != null)
             {
-                GameManager.Instance.SetFlag("ChurchDoorOpened", true);
-
-                if (playerTransform != null)
-                {
-                    GameManager.Instance.SaveScenePosition(
-                        SceneManager.GetActiveScene().name,
-                        playerTransform.position
-                    );
-                }
+                GameManager.Instance.SaveScenePosition(
+                    SceneManager.GetActiveScene().name,
+                    playerTransform.position
+                );
             }
-
-            if (objectToDeactivate != null)
-                objectToDeactivate.SetActive(false);
-
-            SceneManager.LoadScene(sceneToLoad);
         }
+
+        SetObjects(objectsToDeactivate, false);
+
+        SceneManager.LoadScene(sceneToLoad);
     }
 
     private void OnTriggerEnter(Collider other)
