@@ -34,6 +34,10 @@ public class PlayerMovement : MonoBehaviour
     private float dashTimer;
     private float dashCooldownTimer;
 
+    // Dirección a la que se mueve/dashea, independiente de hacia donde mira el personaje
+    private Vector3 lastMoveDir = Vector3.forward;
+    private Vector3 dashDirection;
+
     public bool IsMoving => moveInput != Vector3.zero;
 
     void Start()
@@ -66,6 +70,13 @@ public class PlayerMovement : MonoBehaviour
 
         moveInput = smoothInput;
 
+        // Guardamos la última dirección de movimiento válida (input crudo,
+        // no el suavizado, para que sea instantánea y precisa al dashear)
+        if (targetInput.sqrMagnitude > 0.01f)
+        {
+            lastMoveDir = targetInput;
+        }
+
         isGrounded = controller.isGrounded;
 
         if (isGrounded && velocity.y < 0)
@@ -89,6 +100,12 @@ public class PlayerMovement : MonoBehaviour
             isDashing = true;
             dashTimer = dashDuration;
             dashCooldownTimer = dashCooldown;
+
+            // Dirección del dash = dirección de movimiento actual (input crudo),
+            // o si no hay input en ese instante, la última dirección válida
+            dashDirection = targetInput.sqrMagnitude > 0.01f
+                ? targetInput
+                : lastMoveDir;
         }
 
         if (dashCooldownTimer > 0f)
@@ -107,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
         {
             dashTimer -= Time.deltaTime;
 
-            horizontalMove = transform.forward * dashForce;
+            horizontalMove = dashDirection * dashForce;
 
             if (dashTimer <= 0f)
                 isDashing = false;

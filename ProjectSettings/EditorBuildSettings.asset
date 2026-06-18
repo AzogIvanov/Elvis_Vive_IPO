@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/ChurrianaMainScene.unity
     guid: 6edcaf13c5cbd234dbeaff8a0e8e212b
   - enabled: 1
-    path: Assets/Room/scenes/ChurchInteriorScene.unity
+    path: Assets/Scenes/ChurchInteriorScene/ChurchInteriorScene.unity
     guid: fffc368ce7c545240a157d1fa3ce0e97
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

@@ -5,15 +5,16 @@ using System.Collections.Generic;
 public class GlobalHealth : MonoBehaviour
 {
     public int maxHealth = 3;
+    public bool isPlayer = false; // marca esto SOLO en el GameObject del jugador
 
     [Header("Hit Flash")]
     public Color flashColor = Color.red;
     public float flashDuration = 0.1f;
 
     private int currentHealth;
-
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
+
     public System.Action onHealthChanged;
 
     private Renderer[] renderers;
@@ -26,9 +27,21 @@ public class GlobalHealth : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth;
+        // Debug.Log($"[GlobalHealth] isPlayer={isPlayer}, GameManager.Instance={(GameManager.Instance == null ? "NULL" : "OK")}, GM.playerHealth={GameManager.Instance?.playerHealth}");
+
+        if (isPlayer && GameManager.Instance != null)
+        {
+            currentHealth = GameManager.Instance.playerHealth;
+        }
+        else
+        {
+            currentHealth = maxHealth;
+        }
+
+        onHealthChanged?.Invoke(); // <-- avisamos a la UI del valor restaurado
 
         renderers = GetComponentsInChildren<Renderer>();
+        // Debug.Log($"[GlobalHealth] currentHealth final = {currentHealth}");
 
         foreach (Renderer r in renderers)
         {
@@ -46,11 +59,14 @@ public class GlobalHealth : MonoBehaviour
     {
         currentHealth -= amount;
 
-        onHealthChanged?.Invoke();
+        if (isPlayer && GameManager.Instance != null)
+            GameManager.Instance.playerHealth = currentHealth;
 
+        // Debug.Log($"[TakeDamage] currentHealth={currentHealth}, GM.playerHealth={GameManager.Instance?.playerHealth}");
+
+        onHealthChanged?.Invoke();
         StopCoroutine(nameof(FlashRed));
         StartCoroutine(nameof(FlashRed));
-
         if (currentHealth <= 0)
         {
             Die();
@@ -63,9 +79,7 @@ public class GlobalHealth : MonoBehaviour
         {
             pair.Key.color = flashColor;
         }
-
         yield return new WaitForSeconds(flashDuration);
-
         foreach (var pair in originalColors)
         {
             pair.Key.color = pair.Value;

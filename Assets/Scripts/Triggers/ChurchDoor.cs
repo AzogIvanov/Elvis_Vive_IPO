@@ -10,6 +10,7 @@ public class ChurchDoor : MonoBehaviour
     public GameObject interactText;
 
     private bool playerNear = false;
+    private Transform playerTransform;
 
     private void Start()
     {
@@ -21,6 +22,16 @@ public class ChurchDoor : MonoBehaviour
     {
         if (playerNear && Input.GetKeyDown(KeyCode.F))
         {
+            // Guardamos la posición del jugador en la escena ACTUAL,
+            // justo en el punto donde está la puerta, antes de cambiar de escena
+            if (GameManager.Instance != null && playerTransform != null)
+            {
+                GameManager.Instance.SaveScenePosition(
+                    SceneManager.GetActiveScene().name,
+                    playerTransform.position
+                );
+            }
+
             SceneManager.LoadScene(sceneToLoad);
         }
     }
@@ -30,7 +41,7 @@ public class ChurchDoor : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNear = true;
-
+            playerTransform = other.transform;
             if (interactText != null)
                 interactText.SetActive(true);
         }
@@ -41,7 +52,6 @@ public class ChurchDoor : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNear = false;
-
             if (interactText != null)
                 interactText.SetActive(false);
         }

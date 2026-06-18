@@ -856,6 +856,7 @@ MonoBehaviour:
   dashForce: 12
   dashDuration: 0.15
   dashCooldown: 1
+  hasDash: 0
   animator: {fileID: 1374247857620525343}
 --- !u!114 &5551582430424669378
 MonoBehaviour:
@@ -901,6 +902,7 @@ MonoBehaviour:
   damageInterval: 0.5
   wavePrefab: {fileID: 5060493919823633992, guid: bb3a6850521a62e40ab9a1bb39cbc90e, type: 3}
   waveExpandSpeed: 12
+  hasArea: 0
 --- !u!114 &6437087345408224760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,6 +917,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAttack: {fileID: 5551582430424669378}
   duration: 5
+  hasSpecial: 0
+  specialCooldown: 3
 --- !u!114 &1988603597827072837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -928,6 +932,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.1
 --- !u!143 &4491115619343068967
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1066,10 +1072,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.24412586
-  m_Height: 2.0128381
+  m_Radius: 0.24412584
+  m_Height: 2.337056
   m_Direction: 1
-  m_Center: {x: 0.0109176645, y: 0.9558481, z: 0.025160316}
+  m_Center: {x: 0.0109176645, y: 1.117957, z: 0.02516031}
 --- !u!1001 &2136249662553122692
 PrefabInstance:
   m_ObjectHideFlags: 0
