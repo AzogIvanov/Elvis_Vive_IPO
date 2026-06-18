@@ -9,6 +9,9 @@ public class ChurchDoor : MonoBehaviour
     [Header("UI")]
     public GameObject interactText;
 
+    [Header("Optional Object")]
+    public GameObject objectToDeactivate;
+
     private bool playerNear = false;
     private Transform playerTransform;
 
@@ -16,21 +19,35 @@ public class ChurchDoor : MonoBehaviour
     {
         if (interactText != null)
             interactText.SetActive(false);
+
+        // restaurar estado si ya fue activado antes
+        if (GameManager.Instance != null &&
+            GameManager.Instance.GetFlag("ChurchDoorOpened"))
+        {
+            if (objectToDeactivate != null)
+                objectToDeactivate.SetActive(false);
+        }
     }
 
     private void Update()
     {
         if (playerNear && Input.GetKeyDown(KeyCode.F))
         {
-            // Guardamos la posición del jugador en la escena ACTUAL,
-            // justo en el punto donde está la puerta, antes de cambiar de escena
-            if (GameManager.Instance != null && playerTransform != null)
+            if (GameManager.Instance != null)
             {
-                GameManager.Instance.SaveScenePosition(
-                    SceneManager.GetActiveScene().name,
-                    playerTransform.position
-                );
+                GameManager.Instance.SetFlag("ChurchDoorOpened", true);
+
+                if (playerTransform != null)
+                {
+                    GameManager.Instance.SaveScenePosition(
+                        SceneManager.GetActiveScene().name,
+                        playerTransform.position
+                    );
+                }
             }
+
+            if (objectToDeactivate != null)
+                objectToDeactivate.SetActive(false);
 
             SceneManager.LoadScene(sceneToLoad);
         }
@@ -38,22 +55,24 @@ public class ChurchDoor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            playerNear = true;
-            playerTransform = other.transform;
-            if (interactText != null)
-                interactText.SetActive(true);
-        }
+        if (!other.CompareTag("Player"))
+            return;
+
+        playerNear = true;
+        playerTransform = other.transform;
+
+        if (interactText != null)
+            interactText.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            playerNear = false;
-            if (interactText != null)
-                interactText.SetActive(false);
-        }
+        if (!other.CompareTag("Player"))
+            return;
+
+        playerNear = false;
+
+        if (interactText != null)
+            interactText.SetActive(false);
     }
 }

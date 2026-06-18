@@ -59725,6 +59725,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneToLoad: ChurchInteriorScene
   interactText: {fileID: 533451144}
+  objectToDeactivate: {fileID: 810035107}
 --- !u!65 &810035109
 BoxCollider:
   m_ObjectHideFlags: 0
