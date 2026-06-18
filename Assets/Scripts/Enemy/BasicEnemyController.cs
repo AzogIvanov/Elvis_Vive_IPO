@@ -14,7 +14,10 @@ public class BasicEnemyController : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObj != null)
+            player = playerObj.transform;
 
         health = GetComponent<EnemyHealth>();
         animator = GetComponentInChildren<Animator>();
@@ -28,12 +31,17 @@ public class BasicEnemyController : MonoBehaviour
 
         if (stunned)
         {
-            animator.SetFloat("Speed", 0f);
-            animator.SetBool("Stunned", true);
+            if (animator != null)
+            {
+                animator.SetFloat("Speed", 0f);
+                animator.SetBool("Stunned", true);
+            }
+
             return;
         }
 
-        animator.SetBool("Stunned", false);
+        if (animator != null)
+            animator.SetBool("Stunned", false);
 
         // MOVEMENT
         Vector3 direction = (player.position - transform.position).normalized;
@@ -45,8 +53,9 @@ public class BasicEnemyController : MonoBehaviour
         if (direction != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(direction);
 
-        // ANIMATION SPEED
-        animator.SetFloat("Speed", direction.magnitude);
+        // ANIMATION
+        if (animator != null)
+            animator.SetFloat("Speed", direction.magnitude);
 
         // DAMAGE COOLDOWN
         if (cooldownTimer > 0f)
@@ -64,7 +73,8 @@ public class BasicEnemyController : MonoBehaviour
                 playerHealth.TakeDamage(damage);
                 cooldownTimer = damageCooldown;
 
-                animator.SetTrigger("Attack");
+                if (animator != null)
+                    animator.SetTrigger("Attack");
             }
         }
     }

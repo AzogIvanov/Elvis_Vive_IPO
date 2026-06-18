@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenuScene.unity
+    guid: 17ceecfd622d8b64ab95f05eda0825d7
+  - enabled: 1
     path: Assets/Scenes/ChurrianaMainScene.unity
     guid: 6edcaf13c5cbd234dbeaff8a0e8e212b
   - enabled: 1
