@@ -6,14 +6,21 @@ public class PaquirrinProjectile : MonoBehaviour
     public float lifeTime = 5f;
     public int damage = 1;
 
+    private Rigidbody rb;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     void Start()
     {
         Destroy(gameObject, lifeTime);
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        rb.MovePosition(rb.position + transform.forward * speed * Time.fixedDeltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,11 +28,9 @@ public class PaquirrinProjectile : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GlobalHealth health = other.GetComponentInParent<GlobalHealth>();
-            if (health != null)
-            {
-                health.TakeDamage(damage);
-            }
 
+            if (health != null)
+                health.TakeDamage(damage);
 
             Destroy(gameObject);
         }

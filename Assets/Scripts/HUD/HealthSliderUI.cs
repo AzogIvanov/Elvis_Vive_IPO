@@ -3,19 +3,24 @@ using UnityEngine.UI;
 
 public class HealthSliderUI : MonoBehaviour
 {
-    public GlobalHealth playerHealth;
+    public GlobalHealth targetHealth;
     public Slider slider;
 
     void Start()
     {
-        slider.maxValue = playerHealth.MaxHealth;
+        slider.maxValue = targetHealth.MaxHealth;
 
-        playerHealth.onHealthChanged += UpdateUI;
+        targetHealth.onHealthChanged += UpdateUI;
         UpdateUI();
     }
 
     void UpdateUI()
     {
-        slider.value = playerHealth.CurrentHealth;
+        slider.value = targetHealth.CurrentHealth;
+
+        if (targetHealth.CurrentHealth <= 0)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

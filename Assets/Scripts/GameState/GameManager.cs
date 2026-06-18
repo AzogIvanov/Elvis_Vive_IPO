@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviour
     public bool hasAreaAttack = false;
     public bool hasSpecial = false;
 
+    [Header("Respawn")]
+    private Vector3 lastSpawnPoint;
+    private bool hasSpawnPoint = false;
+
+
     // Flags de progreso
     private Dictionary<string, bool> flags = new Dictionary<string, bool>();
 
@@ -32,6 +37,17 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void SetLastSpawnPoint(Vector3 position)
+    {
+        lastSpawnPoint = position;
+        hasSpawnPoint = true;
+    }
+
+    public bool TryGetLastSpawnPoint(out Vector3 position)
+    {
+        position = lastSpawnPoint;
+        return hasSpawnPoint;
+    }
 
     // ---------------- FLAGS ----------------
     public void SetFlag(string flagId, bool value)
