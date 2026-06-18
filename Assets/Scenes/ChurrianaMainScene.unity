@@ -22738,8 +22738,8 @@ MonoBehaviour:
   playerHealth: 5
   maxHealth: 5
   hasDash: 0
-  hasAreaAttack: 0
-  hasSpecial: 0
+  hasAreaAttack: 1
+  hasSpecial: 1
 --- !u!4 &342084819
 Transform:
   m_ObjectHideFlags: 0
@@ -55994,7 +55994,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionUI: {fileID: 833639098}
-  dialogueText: Hola soy Lulu
+  dialogueText: "\n\nLulu:\nChurriana de la Vega ya est\xE1 contaminada por la antim\xFAsica
+    del Fari.\n\nDir\xEDgete a la iglesia del camino izquierdo y enfr\xE9ntate a
+    Paquirr\xEDn, tu primer boss.\n\nYo te concedo el dash\u2026 \xFAsalo para abrirte
+    paso entre el caos."
   onDialogueClosed:
     m_PersistentCalls:
       m_Calls:
@@ -162404,6 +162407,22 @@ PrefabInstance:
     - target: {fileID: 145926668527003051, guid: 9a89214a0a15b9041b86f6552ffd5ace, type: 3}
       propertyPath: m_text
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 145926668527003051, guid: 9a89214a0a15b9041b86f6552ffd5ace, type: 3}
+      propertyPath: m_margin.z
+      value: -758.5698
+      objectReference: {fileID: 0}
+    - target: {fileID: 145926668527003051, guid: 9a89214a0a15b9041b86f6552ffd5ace, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.14716971
+      objectReference: {fileID: 0}
+    - target: {fileID: 145926668527003051, guid: 9a89214a0a15b9041b86f6552ffd5ace, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.14716971
+      objectReference: {fileID: 0}
+    - target: {fileID: 145926668527003051, guid: 9a89214a0a15b9041b86f6552ffd5ace, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.14716971
       objectReference: {fileID: 0}
     - target: {fileID: 270725056817147915, guid: 9a89214a0a15b9041b86f6552ffd5ace, type: 3}
       propertyPath: m_LocalPosition.z
