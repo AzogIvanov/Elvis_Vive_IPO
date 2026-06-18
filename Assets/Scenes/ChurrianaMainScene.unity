@@ -165214,6 +165214,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9081312233831005635, guid: 9a89214a0a15b9041b86f6552ffd5ace, type: 3}
+      propertyPath: m_text
+      value: 'El Cigala
+
+'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -167684,7 +167690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 772921614780044438, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 797309700427436980, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
       propertyPath: m_Layer
@@ -167693,6 +167699,30 @@ PrefabInstance:
     - target: {fileID: 855420492064969589, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3040402967012709527, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
+      propertyPath: m_Height
+      value: 2.7278
+      objectReference: {fileID: 0}
+    - target: {fileID: 3040402967012709527, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
+      propertyPath: m_Radius
+      value: 0.6910951
+      objectReference: {fileID: 0}
+    - target: {fileID: 3040402967012709527, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3040402967012709527, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
+      propertyPath: m_Center.x
+      value: 0.07849731
+      objectReference: {fileID: 0}
+    - target: {fileID: 3040402967012709527, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
+      propertyPath: m_Center.y
+      value: -0.44173467
+      objectReference: {fileID: 0}
+    - target: {fileID: 3040402967012709527, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
+      propertyPath: m_Center.z
+      value: 0.022253728
       objectReference: {fileID: 0}
     - target: {fileID: 4381782556676302584, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
       propertyPath: m_Name
@@ -167782,10 +167812,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 8356017118002959156, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 960a34cb53e577344a412347a81eb964, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4381782556676302584, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5018828775698726829}
   m_SourcePrefab: {fileID: 100100000, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
 --- !u!4 &4197452165011732060 stripped
 Transform:
@@ -167881,6 +167918,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4597406208113056173, guid: e844750f5bb71244893f02b59f269d6c, type: 3}
   m_PrefabInstance: {fileID: 3810543349769446313}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5018828775698726829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100536398057488137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b53df71dff039e849ac87506ac4cc20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2.5
+  attackRange: 2
+  damage: 3
+  damageCooldown: 1
 --- !u!1001 &5909845870678883616
 PrefabInstance:
   m_ObjectHideFlags: 0
